@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block nav %}
+<div class=metanav>
+    {% if not session.logged_in %}
+    <a href="{{ url_for('flaskr.app.views.login') }}">log in</a>
+    {% else %}
+    <a href="{{ url_for('flaskr.app.views.entry_add') }}" >创建</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="{{ url_for('flaskr.app.views.entry_list') }}">返回列表</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="{{ url_for('flaskr.app.views.logout') }}">log out</a>
+    {% endif %}
+</div>
+{% endblock%}
+
+
+{% block body %}
+{% if entries %}
+<table cellspacing="0">
+    <tr>
+        <td>标题</td>
+        <td>内容</td>
+    </tr>
+    {% for entry in entries %}
+    <tr>
+        <td><h3>{{ entry.title }}</h3></td>
+        <td>{{ entry.content[:30] }}...<a href="{{ url_for('flaskr.app.views.entry_detail', id=entry.id) }}">详情</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<em>Unbelievable. No entries here so far</em>
+{% endif %}
+{% endblock %}

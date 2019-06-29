@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block nav %}
+<div class=metanav>
+    {% if not session.logged_in %}
+    <a href="{{ url_for('flaskr.app.views.login') }}">log in</a>
+    {% else %}
+    <a href="{{ url_for('flaskr.app.views.entry_add') }}" >创建</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="{{ url_for('flaskr.app.views.entry_list') }}">返回列表</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="{{ url_for('flaskr.app.views.logout') }}">log out</a>
+    {% endif %}
+</div>
+{% endblock%}
+
+{% block body %}
+{% if session.logged_in %}
+    <form action="{{ url_for('flaskr.app.views.entry_add') }}" method=post class=add-entry>
+        <table>
+            <tr>
+                <td>Title</td>
+                <td><input type=text size=30 name=title></td>
+            </tr>
+
+            <tr>
+                <td>Content</td>
+                <td><textarea name=content rows=5 cols=40></textarea></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type=submit value=Share></td>
+            </tr>
+        </table>
+    </form>
+{% endif %}
+{% endblock %}
